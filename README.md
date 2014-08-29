@@ -48,25 +48,35 @@ Here is a simplyfied example:
 ```php
 <?php
 
-// Require composer autoloading
+// include composer autoloading
 require_once 'vendor/autoload.php';
 
-use hollodotme\TreeMDown\TreeMDown;
+// IMPORTANT: Don't use hollodotme\**TreeMDown**\TreeMDown here!
+// This package has an extended TreeMDown class
+
+use hollodotme\TreeMDownMulti\TreeMDown;
 use hollodotme\TreeMDownMulti\TreeMDownMulti;
 
+// Create instance
 $multi_view = new TreeMDownMulti();
 
-$my_docs_tree = new TreeMDown(__DIR__ . '/my_docs');
-$my_docs_tree->hideEmptyFolders();
-$my_docs_tree->setProjectName('My docs');
+// Configure your markdown primary dir
+$tree1 = new TreeMDown( '/path/to/your/markdown/files' );
+$tree1->hideEmptyFolders();
+$tree1->setProjectName( 'Your markdown files' );
+$tree1->enablePrettyNames();
+$tree1->hideFilenameSuffix();
 
-$your_docs_tree = new TreeMDown(__DIR__ . '/your_docs');
-$your_docs_tree->showEmptyFolders();
-$your_docs_tree->setProjectName('Your docs');
+// Configure other dir
+// Note: No output options set to show the difference
+$tree2 = new TreeMDown( '/path/to/other/markdown/files' );
+$tree2->setProjectName( 'Other markdown files' );
 
-$multi_view->addTree( $my_docs_tree, 'My documents');
-$multi_view->addTree( $your_docs_tree, 'Your documents');
+// Make "Yours" default (3rd parameter)
+$multi_view->addTreeMDown( $tree1, 'Yours', true );
+$multi_view->addTreeMDown( $tree2, 'Others' );
 
+// Display
 $multi_view->display();
 
 ```

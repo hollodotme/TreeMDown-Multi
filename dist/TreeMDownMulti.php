@@ -1,15 +1,18 @@
 <?php
 /**
  * TreeMDown-Multi wrapper
+ *
  * @author hollodotme
  */
 
 namespace hollodotme\TreeMDownMulti;
 
 use hollodotme\TreeMDown\TreeMDown;
+use hollodotme\TreeMDownMulti\Misc\Opt;
 
 /**
  * Class TreeMDownMulti
+ *
  * @package hollodotme\TreeMDownMulti
  */
 class TreeMDownMulti
@@ -17,12 +20,14 @@ class TreeMDownMulti
 
 	/**
 	 * Root directories
+	 *
 	 * @var array|TreeMDown[]
 	 */
 	protected $_trees = array();
 
 	/**
 	 * Default tree (title)
+	 *
 	 * @var null|string
 	 */
 	protected $_default_tree = null;
@@ -30,12 +35,13 @@ class TreeMDownMulti
 	/**
 	 * Add a TreeMDown instance
 	 *
-	 * @param TreeMDown $tree  TreeMDown instance
-	 * @param string    $title Tree title
+	 * @param TreeMDown $tree       TreeMDown instance
+	 * @param string    $title      Tree title
+	 * @param bool      $is_default Default tree?
 	 */
 	public function addTreeMDown( TreeMDown $tree, $title, $is_default = false )
 	{
-		$this->_trees[$title] = $tree;
+		$this->_trees[ $title ] = $tree;
 
 		if ( !empty($is_default) )
 		{
@@ -45,6 +51,7 @@ class TreeMDownMulti
 
 	/**
 	 * Return the TreeMDown instances
+	 *
 	 * @return array
 	 */
 	public function getTrees()
@@ -61,9 +68,9 @@ class TreeMDownMulti
 	 */
 	public function getTree( $title )
 	{
-		if ( is_string( $title ) && isset($this->_trees[$title]) )
+		if ( is_string( $title ) && isset($this->_trees[ $title ]) )
 		{
-			$tree = $this->_trees[$title];
+			$tree = $this->_trees[ $title ];
 		}
 		else
 		{
@@ -71,6 +78,16 @@ class TreeMDownMulti
 		}
 
 		return $tree;
+	}
+
+	/**
+	 * Return the current tree
+	 *
+	 * @return TreeMDown|null
+	 */
+	public function getCurrentTree()
+	{
+		return $this->getTree( $this->_getCurrentIndex() );
 	}
 
 	/**
@@ -82,10 +99,11 @@ class TreeMDownMulti
 	 */
 	public function getOutput( array &$headers = array() )
 	{
+		$this->_prepareOptions();
+
 		if ( !empty($this->_trees) )
 		{
-			$index = $this->_getCurrentIndex();
-			$tree  = $this->_trees[$index];
+			$tree = $this->getCurrentTree();
 
 			if ( ($tree instanceof TreeMDown) )
 			{
@@ -134,7 +152,22 @@ class TreeMDownMulti
 	}
 
 	/**
+	 * Prepare the options
+	 */
+	protected function _prepareOptions()
+	{
+		$current_tree = $this->getCurrentTree();
+
+		if ( $current_tree instanceof TreeMDown )
+		{
+			$current_tree->getOptions()->set( Opt::TREE_DEFAULT, $this->_default_tree );
+			$current_tree->getOptions()->set( Opt::TREE_CURRENT, $this->_getCurrentIndex() );
+		}
+	}
+
+	/**
 	 * Return the current index
+	 *
 	 * @return null|string
 	 */
 	protected function _getCurrentIndex()
@@ -166,6 +199,8 @@ class TreeMDownMulti
 		$select_form = $dom->createElement( 'form' );
 		$select_form->setAttribute( 'method', 'get' );
 		$select_form->setAttribute( 'action', '' );
+
+		$sidebar_column->insertBefore( $dom->createElement( 'hr' ), $sidebar_column->firstChild );
 
 		$sidebar_column->insertBefore( $select_form, $sidebar_column->firstChild );
 
@@ -200,6 +235,7 @@ class TreeMDownMulti
 		$select->setAttribute( 'name', 'tmd_t' );
 		$select->setAttribute( 'size', '1' );
 		$select->setAttribute( 'class', 'form-control' );
+		$select->setAttribute( 'onchange', 'this.form.submit();' );
 		$group->appendChild( $select );
 
 		$current_index = $this->_getCurrentIndex();

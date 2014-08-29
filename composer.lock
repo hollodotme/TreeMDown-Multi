@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7872dff4d6169d48e605e3059437e859",
+    "hash": "f9fbb0944674dd873a0828bfe712c950",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -91,16 +91,16 @@
         },
         {
             "name": "hollodotme/treemdown",
-            "version": "dev-master",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hollodotme/TreeMDown.git",
-                "reference": "834e15b6beae393e5c15c66df65519e7881e1caa"
+                "reference": "be5633533c57c38cd69b28e26a23dec5d0715522"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hollodotme/TreeMDown/zipball/834e15b6beae393e5c15c66df65519e7881e1caa",
-                "reference": "834e15b6beae393e5c15c66df65519e7881e1caa",
+                "url": "https://api.github.com/repos/hollodotme/TreeMDown/zipball/be5633533c57c38cd69b28e26a23dec5d0715522",
+                "reference": "be5633533c57c38cd69b28e26a23dec5d0715522",
                 "shasum": ""
             },
             "require": {
@@ -135,7 +135,7 @@
                 "search",
                 "tree"
             ],
-            "time": "2014-08-29 12:06:43"
+            "time": "2014-08-29 23:19:05"
         }
     ],
     "packages-dev": [
@@ -145,9 +145,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "hollodotme/treemdown": 20
-    },
+    "stability-flags": [
+
+    ],
     "prefer-stable": false,
     "platform": {
         "php": ">=5.3"
