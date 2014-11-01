@@ -22,5 +22,12 @@ class DefaultOptions extends \hollodotme\TreeMDown\Misc\DefaultOptions
 		parent::__construct();
 
 		$this->set( Opt::GITHUB_RIBBON_URL, 'https://github.com/TreeMDown-Multi' );
+		$this->set(
+			Opt::BASE_PARAMS, array(
+				'tmd_f' => 'index.md',
+				'tmd_q' => '',
+				'tmd_t' => '',
+			)
+		);
 	}
 }
