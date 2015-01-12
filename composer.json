@@ -23,7 +23,7 @@
 	],
 	"require":     {
 		"php": ">=5.3",
-		"hollodotme/treemdown": "~1.0,>=1.0.8",
+		"hollodotme/treemdown": "~1.0,>=1.0.8"
 	},
 	"autoload":    {
 		"psr-4": {
